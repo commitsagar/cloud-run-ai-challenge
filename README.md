@@ -31,6 +31,29 @@ This project was developed in **Google AI Studio** and deployed to **Google Clou
 
 ---
 
+## 🧪 Automated Testing, TDD & Verification Suite
+
+The repository includes a full automated test suite powered by **Vitest**, verifying basic elements, happy paths, security constraints, and failure recovery scenarios:
+
+| Test Suite | Scenarios Verified | Result |
+| :--- | :--- | :---: |
+| `tests/sentimentAnalysis.test.ts` | 9 Tests (Bounds [0,100], chronological trends, inflection point detection, missing data recovery) | ✅ **PASSED** |
+| `tests/securityRulesAndSanitization.test.ts` | 6 Tests (Subcollection paths, unauthenticated rejection, cross-tenant isolation, payload hygiene) | ✅ **PASSED** |
+| `tests/fallbackLadder.test.ts` | 5 Tests (4-tier hierarchy, 503 failover, 429 quota failover, offline deterministic recovery) | ✅ **PASSED** |
+| **TOTAL** | **20 Automated Tests** | **100% GREEN** |
+
+Detailed testing documentation, execution logs, and visual UI architecture wireframes are maintained in the `/docs/testing/` directory:
+* 📄 [`docs/testing/TEST_REPORT.md`](docs/testing/TEST_REPORT.md) — Comprehensive test execution matrix and scenario breakdowns.
+* 📋 [`docs/testing/TEST_LOGS.txt`](docs/testing/TEST_LOGS.txt) — Raw timestamped runner output and API simulation logs.
+* 📸 [`docs/testing/SCREENSHOTS_AND_MOCKS.md`](docs/testing/SCREENSHOTS_AND_MOCKS.md) — Visual screen layouts, ASCII wireframes, and interaction state diagrams.
+
+To run the automated tests locally:
+```bash
+npm test
+```
+
+---
+
 ## 💡 Custom AI Features Beyond the Starter Lab
 
 ### 1. 📈 Longitudinal Sentiment & Emotional Trend Analysis (`/api/journal/sentiment-analysis`)

@@ -43,6 +43,7 @@ import {
   orderBy, 
   deleteDoc, 
   updateDoc, 
+  setDoc,
   serverTimestamp, 
   type User 
 } from '../lib/firebase';
@@ -166,9 +167,21 @@ export const JournalDashboard: React.FC<JournalDashboardProps> = ({ user, onTran
   };
 
 
-  // 1. Subscribe to User's Isolated Journals in Cloud Firestore
+  // 1. Subscribe to User's Isolated Journals in Cloud Firestore & Ensure Root User Doc Exists
   useEffect(() => {
     if (!user || !user.uid) return;
+
+    // Ensure root user document exists so it is directly visible in Firestore Console queries
+    const userDocRef = doc(db, 'users', user.uid);
+    setDoc(userDocRef, {
+      uid: user.uid,
+      email: user.email || 'guest@productiondirectives.local',
+      displayName: user.displayName || 'Guest Reflection Author',
+      lastActive: Date.now(),
+      updatedAt: Date.now(),
+    }, { merge: true }).catch((err) => {
+      console.warn('User root doc sync note:', err);
+    });
 
     const journalsRef = collection(db, 'users', user.uid, 'journals');
     const q = query(journalsRef, orderBy('updatedAt', 'desc'));
