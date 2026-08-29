@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Zero Insecure Defaults (Never allow public read/write)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. User Data Isolation (Owner-bound path checking)
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /journals/{journalId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /reflections/{reflectionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /interactions/{interactionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /threat_models/{modelId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /audits/{auditId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      match /{allSubcollections=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // 3. Root Level Journals collection (Strict User Isolation by owner ID)
+    match /journals/{journalId} {
+      allow read, write: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid) && (request.resource == null || request.resource.data.userId == request.auth.uid);
+    }
+  }
+}
