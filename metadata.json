@@ -1,7 +1,7 @@
 {
   "name": "Production Directives Platform",
-  "description": "User-authenticated AI journaling & reflection platform using Firebase Auth, isolated Cloud Firestore persistence, and Gemini 3.6 Flash.",
-  "requestFramePermissions": [],
+  "description": "User-authenticated AI journaling, cognitive synthesis, and longitudinal sentiment analysis platform powered by Gemini, Firebase Auth, and isolated Cloud Firestore.",
+  "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
 
